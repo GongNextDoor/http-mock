@@ -5,20 +5,12 @@ const app = express()
 
 apis.forEach(api => {
   app[api.method](api.url, (req, res) => {
-    if (api.success)
-      res.send({
-        code: 200,
-        success: true,
-        msg: 'ok',
-        data: api.data
-      })
-    else
-      res.send({
-        code: -1,
-        success: false,
-        msg: 'error',
-        data: null
-      })
+    res.send({
+      code: api.success ? 200 : -1,
+      success: api.success,
+      msg: api.success ? 'ok' : 'error',
+      data: api.success ? api.data : null
+    })
   })
 })
 
